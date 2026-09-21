@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List</title>
+</head>
+
+<body>
+
+    <h1>Shopping List</h1>
+
+    <input type="text" id="itemInput" placeholder="Enter an item">
+
+    <button onclick="handleAddItem()">Add Item</button>
+    <button onclick="handleRemoveLastItem()">Remove Last Item</button>
+
+    <ul id="shoppingList"></ul>
+
+    <script>
+
+        let shoppingList = [];
+
+        function addItem(item) {
+            if (!shoppingList.includes(item)) {
+                shoppingList.push(item);
+            } else {
+                console.log("Item already exists");
+            }
+        }
+
+        function removeLastItem() {
+            shoppingList.pop();
+        }
+
+        function displayList() {
+            console.log(shoppingList);
+        }
+
+        function filterItems(searchTerm) {
+            return shoppingList.filter(function (item) {
+                return item.toLowerCase().includes(searchTerm.toLowerCase());
+            });
+        }
+
+        function updateDisplay() {
+            const listElement = document.getElementById("shoppingList");
+
+            listElement.innerHTML = "";
+
+            shoppingList.forEach(function (item) {
+                const listItem = document.createElement("li");
+                listItem.textContent = item;
+                listElement.appendChild(listItem);
+            });
+
+            displayList();
+        }
+
+        function handleAddItem() {
+            const input = document.getElementById("itemInput");
+            const item = input.value.trim();
+
+            if (item !== "") {
+                addItem(item);
+                updateDisplay();
+                input.value = "";
+                input.focus();
+            }
+        }
+
+        function handleRemoveLastItem() {
+            removeLastItem();
+            updateDisplay();
+        }
+
+    </script>
+
+</body>
+
+</html>
